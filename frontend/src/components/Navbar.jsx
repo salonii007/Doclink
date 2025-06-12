@@ -45,7 +45,7 @@ const Navbar = () => {
             <div className=" absolute top-0 right-0 pt-14 text-base font-medium text-teal-900 z-20 hidden group-hover:block" >
                 <div className="min-w-28 bg-cyan-100 rounded flex flex-col gap-4 p-4">
                     <p onClick={()=>{navigate('/myprofile')}} className="hover:text-black cursor-pointer">My profile</p>
-                    <p onClick={()=>{navigate('/myappointments')}}className="hover:text-black cursor-pointer">Appointments</p>
+                    <p onClick={()=>{navigate('/myappointment')}}className="hover:text-black cursor-pointer">Appointments</p>
                     <p onClick={()=>{
                         settoken(false);
                     }} className="hover:text-black cursor-pointer">logout</p>
@@ -60,7 +60,27 @@ const Navbar = () => {
             Create Account
           </button>
         )}
+        </div>
+        <img onClick={()=>setshowmenu(true)} className="w-6 ml-2 md:hidden" src={assets.menu_icon} alt="" />
+      {/* mobile menu */}
+      <div className={` ${showmenu ? 'fixed w-full' : 'h-0 w-0'} md:hidden right-0 top-0 bottom-0 z-20 overflow-hidden bg-white transition-all `}>
+        <div className="flex items-center justify-between px-5 py-6">
+          <img className="w-36" src={assets.logo} alt="" />
+          <img className="w-5" onClick={()=>setshowmenu(false)}
+           src={assets.cross_icon} alt="" />
+        </div>
+        <ul className="flex flex-col items-center gap-2 mt-5 px-5 text-lg font-medium">
+          <NavLink className='px-4 py-2 rounded inline-block' 
+          onClick={()=>setshowmenu(false)} to={'/'}>HOME</NavLink>
+          <NavLink className='px-4 py-2 rounded inline-block'
+          onClick={()=>setshowmenu(false)} to={'/doctors'}>ALL DOCTORS</NavLink>
+          <NavLink className='px-4 py-2 rounded inline-block'
+          onClick={()=>setshowmenu(false)} to={"/about"}>ABOUT</NavLink>
+          <NavLink className='px-4 hover:bg-primary hover:text-white py-2 rounded inline-block'
+          onClick={()=>setshowmenu(false)} to={"/contact"}>CONTACT</NavLink>
+        </ul>
       </div>
+      
     </div>
   );
 };
