@@ -18,7 +18,7 @@ const Contact = () => {
           <p className='text-gray-500'> Tel: (0733) 2232276 <br/> Email: saloni007mahajan@gmail.com</p>
           <p className='font-semibold text-lg text-gray-600'> Careers as Doclink</p>
           <p className='text-gray-500'>Learn more about our teams and job openings</p>
-          <button className='border rounded-lg text-gray-600 py-1 px-3 border-gray-300 hover:bg-black hover:text-white transition-all duration-500'>Explore Jobs</button>
+          <button className='border text-gray-600 p-3 border-gray-300 hover:bg-black hover:text-white transition-all duration-500'>Explore Jobs</button>
         </div>
 
         </div>
