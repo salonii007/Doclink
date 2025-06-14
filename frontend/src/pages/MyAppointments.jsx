@@ -22,7 +22,7 @@ const MyAppointments = () => {
             <p  className='text-sm mt-1'><span className='text-sm text-neutral-700 font-medium' >Date and Time:</span></p>
           </div>
           <div className='flex flex-col gap-2 justify-end'>
-          
+          <div></div>
           <button className=' sm:min-w-48 mb-1 p-2 text-sm bg-green-700 border text-white  border-green-400 hover:bg-green-200 hover:text-black'>
             Pay online</button>
             <button className=' sm:min-w-48 p-2 border text-sm bg-red-700 text-white border-red-400  hover:bg-red-200 hover:text-black'> Cancel Appointment</button> 
