@@ -79,7 +79,8 @@ const addDoctor= async (req, res)=>{
 const loginAdmin= async (req, res)=>{
     try{
 
-        const {email, password}= req.body;
+        const {email, password} = req.body;
+        // console.log(`here here ${req.body}`)
 
         if (email===process.env.ADMIN_EMAIL && password=== process.env.ADMIN_PASSWORD)
         {
