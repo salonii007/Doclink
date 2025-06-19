@@ -51,9 +51,7 @@ const AddDoctor = () => {
 
         if(data.success)
         {
-            
-  console.log("✅ Toast should show now");
-            toast.success(data.message)
+          toast.success(data.message)
             //reseting after saving
             setdocImg(false)
             setname("")
@@ -68,9 +66,6 @@ const AddDoctor = () => {
             setfees('')
         }
         else{
-            
-  console.log("✅ sdfgh Toast should show now");
-  console.log(data.message)
             toast.error(data.message)
         }
 

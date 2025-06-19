@@ -100,4 +100,17 @@ const loginAdmin= async (req, res)=>{
 
 }
 
-export {addDoctor, loginAdmin}
+//API to get all doctors list for admin panel
+const allDoctors= async(req, res)=>{
+    try {
+        const doctors= await doctorModel.find({}).select('-password') //it will retrieve all data except password
+        res.json({succes:true, doctors})
+        
+    } catch (error) {
+         console.log(err)
+        res.json({succes:false, message:`Sorryyy! something went wrong ${err.message}`})
+    }
+}
+ 
+
+export {addDoctor, loginAdmin , allDoctors}
