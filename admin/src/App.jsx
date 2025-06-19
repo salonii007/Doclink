@@ -20,6 +20,7 @@ const App = () => {
     <div className='bg-[#F8F9FD]'>
       <Navbar/>
       <div className='flex items-start'>
+        <ToastContainer/>
         <SideMenu/>
         <Routes>
           <Route path='/' element={<></>}/>
