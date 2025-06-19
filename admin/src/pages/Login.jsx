@@ -15,13 +15,17 @@ const Login = () => {
             <div className='w-full'>
                 <p>Email</p>
                 <input className='border border-black rounded w-full p-2 mt-1'
-                 onChange={()=>{setemail(value)}}
-                
+                 onChange={(e)=>{setemail(e.target.value)}}
+                value={email}
                 type="email" required />
             </div>
             <div className='w-full'>
                 <p>Password</p>
-                <input type="password" required />
+                <input  className='border border-black rounded w-full p-2 mt-1'
+                type="password"
+                required
+                value={password}
+                onChange={(e) => setpassword(e.target.value)} />
             </div>
             <button
             className='bg-primary text-white w-full py-2 mt-2 rounded-md text-base'>Login</button>

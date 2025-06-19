@@ -8,10 +8,11 @@ const DoctorContextProvider =(props)=>{
         
     }
 
-    return 
+    return (
     <DoctorContext.Provider value={value}>
         {props.children}
     </DoctorContext.Provider>
+    )
 
 }
 
