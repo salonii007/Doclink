@@ -142,8 +142,8 @@ const AddDoctor = () => {
                          type="number" placeholder='fees' required />
                     </div>
                 </div>
-                <div>
-                    <div className=' w-full lg:flex-1 flex flex-col gap-1 '>
+                <div className=' w-full lg:flex-1 flex flex-col gap-1 '>
+                    <div className='flex-1 flex flex-col gap-1 '>
                         <p>Speciality</p>
                         <select onChange={(e)=>setspeciality(e.target.value)} value={speciality}
                          className='border rounded px-3 py-2' name="" id="">
