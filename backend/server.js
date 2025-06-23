@@ -5,6 +5,7 @@ import connectDB from './config/mongodb.js'
 import connectCloudinary from './config/cloudinary.js'
 import adminRouter from './routes/adminroute.js'
 import doctorRouter from './routes/doctorroute.js'
+import userRouter from './routes/userroutes.js'
 //app config
 const app=express()
 const port=process.env.PORT || 4000
@@ -20,6 +21,10 @@ app.use(cors()) //allows frontend to connect with backend
 app.use('/api/admin', adminRouter)
 //localhost:4000/api/admin/
 app.use('/api/doctor', doctorRouter)
+
+app.use('/api/user', userRouter)
+
+
 
 app.get('/',(req,res)=>{
 res.send('API Working ')

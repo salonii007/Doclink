@@ -32,10 +32,7 @@ const userSchema = new mongoose.Schema({
         }
     },
 
-    date:{
-        type:Number,
-        required:true
-    },
+    
 
     gender:{
         type: String, 
@@ -48,7 +45,7 @@ const userSchema = new mongoose.Schema({
     },
 
     phone:{
-        type:string,
+        type:String,
         default:"000000000"
     },
 
