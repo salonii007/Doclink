@@ -1,6 +1,13 @@
 import React, { useState } from 'react'
+import { useContext } from 'react';
+import { AppContext } from '../context/AppContext';
+import axios from 'axios'
+import {toast} from 'toastify-react'
+
 
 const Login = () => {
+
+  const {token, settoken, backenUrl } = useContext(AppContext)
 
   const [state, setstate]=useState("Sign Up");
 
@@ -9,13 +16,42 @@ const Login = () => {
   const [password,setpassword]=useState("");
   const [name, setname]=useState("");
 
+
   const onsubmithandler= async (event)=>{
     event.preventDefault() //iss see! when u submit the form the page will NOT reload 
+    try {
+      if(state== 'Sign Up')
+      {
+        const data= await axios.post(backenUrl+ "/api/user/register", {name, password, email})
+        if(data.success)
+        {
+          localStorage.setItem('token', data.token)
+          settoken(data.token)
+        }else
+        {
+          toast.error(data.message)
+        }
+      }
+      else{
+        if(data.success){
+        const data = await axios.post(backenUrl+ "/api/user/login", {email,password})
+                  localStorage.setItem('token', data.token)
+          settoken(data.token)
+        }else
+        {
+          toast.error(data.message)
+        }
+      }
+      
+    } catch (error) {
+       toast.error(error.message)
+      
+    }
   }
 
   return (
     <div>
-      <form className='min-h-[80vh] flex items-center' action="" >
+      <form onSubmit={onsubmithandler} className='min-h-[80vh] flex items-center' action="" >
         <div className=' px-8 py-7 border border-gray-200 min-w-[340px] sm:min-w-96 m-auto shadow-lg rounded-lg bg-gray-50'>
           <p className='text-bold text-gray-800 text-3xl mb-8'>
             {state==='Sign Up'? "Create Account" : "Login"}
@@ -49,7 +85,7 @@ const Login = () => {
             required
             value={password}/>
           </div>
-          <button className='  rounded bg-primary text-white w-full p-2 mt-4 center'
+          <button type='submit' className='  rounded bg-primary text-white w-full p-2 mt-4 center'
           >{state==='Sign Up'? "Create Account" : "Login"}</button>
        {
         state==="Sign Up"
