@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 import { assets } from "../assets/assets";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AppContext } from "../context/AppContext";
 
 const Navbar = () => {
   const navigate = useNavigate();
 
   const [showmenu, setshowmenu] = useState(false);
-  const [token, settoken] = useState(true); //when we have token we are loggedin and when not, we are logged out
+  const {token, settoken} = useContext(AppContext) //when we have token we are loggedin and when not, we are logged out
 
+
+  const logout=()=>{
+    settoken(false)
+    localStorage.removeItem('token')
+  }
   return (
     <div className="flex items-center justify-between text-sm border-b border-b-gray-500 mb-5">
       <img onClick={()=> {navigate('/home')}} className="w-50 cursor-pointer" src={assets.logo} alt="logo" />
@@ -47,7 +54,7 @@ const Navbar = () => {
                     <p onClick={()=>{navigate('/myprofile')}} className="hover:text-black cursor-pointer">My profile</p>
                     <p onClick={()=>{navigate('/myappointment')}}className="hover:text-black cursor-pointer">Appointments</p>
                     <p onClick={()=>{
-                        settoken(false);
+                        logout
                     }} className="hover:text-black cursor-pointer">logout</p>
                 </div>
                 </div>

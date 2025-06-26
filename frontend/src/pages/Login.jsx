@@ -1,14 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useContext } from 'react';
 import { AppContext } from '../context/AppContext';
 import axios from 'axios'
-import {toast} from 'toastify-react'
+import { toast } from 'react-toastify'
+import {useNavigate} from 'react-router-dom'
+
 
 
 const Login = () => {
 
-  const {token, settoken, backenUrl } = useContext(AppContext)
+  const {token, settoken, backendUrl } = useContext(AppContext)
 
+  const navigate = useNavigate();
   const [state, setstate]=useState("Sign Up");
 
   const[email,setemail]=useState("");
@@ -22,7 +25,8 @@ const Login = () => {
     try {
       if(state== 'Sign Up')
       {
-        const data= await axios.post(backenUrl+ "/api/user/register", {name, password, email})
+        const response= await axios.post(backendUrl+ "/api/user/register", {name, password, email})
+        const data= response.data
         if(data.success)
         {
           localStorage.setItem('token', data.token)
@@ -33,9 +37,10 @@ const Login = () => {
         }
       }
       else{
+        const response = await axios.post(backendUrl + "/api/user/login", {email,password})
+        const data= response.data
         if(data.success){
-        const data = await axios.post(backenUrl+ "/api/user/login", {email,password})
-                  localStorage.setItem('token', data.token)
+                          localStorage.setItem('token', data.token)
           settoken(data.token)
         }else
         {
@@ -48,6 +53,11 @@ const Login = () => {
       
     }
   }
+  useEffect(()=>{
+    if(token){
+      navigate('/')
+    }
+  }, [token])
 
   return (
     <div>

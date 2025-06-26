@@ -11,19 +11,22 @@ const AppContextProvider = (props)=>{
     const [doctors, setdoctors]= useState([]) 
     const [token,settoken]=useState ("")
 
+    console.log("👉 BACKEND URL =", backendUrl);
+
+
 
 
 
    
     const getDoctorsData=async()=>{
         try {
-            const {data} = axios.get(backendUrl+'/api/doctor/list')
+            const {data} = await axios.get(backendUrl+'/api/doctor/list')
             if(data.success){
                 setdoctors(data.doctors)
                 
             }
             else{
-                toast.errorr(data.message)
+                toast.error(data.message)
             }
         } catch (error) {
             console.log(error);
@@ -32,7 +35,8 @@ const AppContextProvider = (props)=>{
 
 
          const value={
-        doctors, settoken, token, backendUrl
+        doctors, settoken, 
+        token, backendUrl
     }
 
 
