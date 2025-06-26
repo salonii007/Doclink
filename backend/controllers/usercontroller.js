@@ -30,10 +30,11 @@ const registerUser= async(req, res)=>{
         const user = await newuser.save()
         //iss se  ._id filed mil jayegi-- iss se apan token banayenge
 
-        const utoken = jwt.sign({id:user._id}, process.env.JWT_SECRET)
-        res.json({success:true, token: utoken})
+        const token = jwt.sign({id:user._id}, process.env.JWT_SECRET)
+        res.json({success:true, token: token})
 
     } catch (error) {
+        console.log("userauth error2")
 
         res.json({success:false, message:error.message})
     }
@@ -69,7 +70,9 @@ const loginUser= async(req,res)=>{
 
 const getProfile = async (req,res)=>{
     try {
-        const {userId}= req.body //jo apn ne authUser me token me se nikal ke req.body pe attach kr di
+        const userId = req.user.id;
+
+        // const {userId}= req.body //jo apn ne authUser me token me se nikal ke req.body pe attach kr di
          const userData= await userModel.findById(userId).select(' -password')
         
          res.json({success:true, userData})
@@ -83,8 +86,9 @@ const getProfile = async (req,res)=>{
 //edit user profile
 const editProfile= async (req,res)=>{
     try {
+        const userId = req.user.id;
 
-        const {userId, name, phone, address, dob, gender}= req.body //userId is added in authuser
+        const { name, phone, address, dob, gender}= req.body //userId is added in authuser
         const imageFile= req.file
 
         if(!name || !phone || !address || !dob || !gender){

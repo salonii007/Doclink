@@ -11,8 +11,7 @@ const AppContextProvider = (props)=>{
     const [doctors, setdoctors]= useState([]) 
     const [token,settoken]=useState (localStorage.getItem('token')? localStorage.getItem('token'): false )
 
-    console.log("👉 BACKEND URL =", backendUrl);
-
+    const [userData, setUserData]= useState(false)
 
 
 
@@ -31,18 +30,45 @@ const AppContextProvider = (props)=>{
         } catch (error) {
             console.log(error);
             toast.error(error.message)
-        }   }
+        }  
+    
+    }
+
+    const loadUserProfile = async ()=>{
+        try {
+            const {data}= await axios.get(backendUrl + '/api/user/get-profile', {headers: {token}})
+            if(data.success){
+                setUserData(data.userData)
+            }
+            else{
+                toast.error(data.message)
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error(error.message)
+        }
+    }
 
 
          const value={
         doctors, settoken, 
-        token, backendUrl
+        token, backendUrl,
+         userData, setUserData, loadUserProfile
     }
 
 
         useEffect(()=>{
             getDoctorsData()
         },[])
+
+        useEffect(()=>{
+            if(token){
+            loadUserProfile()
+            }
+            else{
+                setUserData(false) //jab logout karo tab
+            }
+        },[token])
 
     return (
         <AppContext.Provider value={value}>
