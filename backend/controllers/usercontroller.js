@@ -111,6 +111,7 @@ const editProfile= async (req,res)=>{
 }
 
 
+//api to book appointment
 
 
 export {registerUser, editProfile, getProfile, loginUser}
