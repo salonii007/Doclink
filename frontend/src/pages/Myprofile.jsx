@@ -1,16 +1,59 @@
 import React, { useContext, useState } from 'react'
 // import { assets } from '../assets/assets'
 import { AppContext } from '../context/AppContext';
+import { assets } from '../assets/assets';
 
 const Myprofile = () => {
 
-  const {userData, setUserData} = useContext(AppContext)
+  const {userData, setUserData, token , backendUrl, loadUserProfileData} = useContext(AppContext)
 
   const [isedit,setisedit]=useState(false);
+   const [image, setimage]= useState(false)
+
+   const updateuserprofiledata= async ()=>{
+    // 
+    try {
+      const formData= new FormData()
+      formData.append('name', userData.name)
+      formData.append('phone', userData.phone)
+      formData.append('gender', userData.gender)
+      formData.append('dob', userData.dob)
+      formData.append('address', JSON.stringify(userData.address))
+      image && formData.append('image', image)//becoz image is an optional field 
+
+      const {data}= await axios.post(backendUrl + '/api/user/edit-profile', formData, {Headers: {token}})
+
+      if(data.success)
+      {
+        toast.success(data.message)
+        await loadUserProfileData()
+        setisedit(false)
+        setimage(false)
+      }
+      else{
+        toast.error(data.message)
+      }
+
+    } catch (error) {
+      console.log(error)
+      toast.error(error.message)
+    }
+   }
 
   return userData && (
     <div className='max-w-lg border p-2 border-gray-200 align-center flex flex-col gap-2 text-sm'>
-      <img className='w-36 rounded' src={userData.image} alt="" />
+      {
+        isedit?
+        <label htmlFor='image'>
+          <div className='inline-block relative cursor-pointer'>
+            <img className='w-36 rounded opacity-70' src={image ? URL.createObjectURL(image) : userData.image} alt="" />
+            <img className='w-10 absolute bottom-12 right-12' src={image ? '' : assets.upload_icon} alt="" />
+          </div>
+          <input onChange={(e)=>{setimage(e.target.files[0])}} type="file"  id="image" hidden/>
+        </label>
+        : <img className='w-36 rounded' src={userData.image} alt="" />
+     
+      }
       {
         isedit?
         <input className='border rounded border-gray-400 my-2 p-2' type="text"  value={userData.name} onChange={e=>setUserData (prev=>({...prev, name:e.target.value}))}/>
@@ -65,7 +108,7 @@ const Myprofile = () => {
       </div>
       {
         isedit?
-        <button className='w-20 p-2 bg-primary text-white rounded' onClick={()=>setisedit(false)}>Save Info</button>
+        <button  className='w-20 p-2 bg-primary text-white rounded' onClick={()=>updateuserprofiledata()}>Save Info</button>
         : <button className='w-20 p-2 bg-primary text-white rounded' onClick={()=>setisedit(true)}>Edit</button>      }
 
 
