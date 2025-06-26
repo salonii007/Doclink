@@ -9,7 +9,7 @@ const AppContextProvider = (props)=>{
 
     const backendUrl= import.meta.env.VITE_BACKEND_URL
     const [doctors, setdoctors]= useState([]) 
-    const [token,settoken]=useState ("")
+    const [token,settoken]=useState (localStorage.getItem('token')? localStorage.getItem('token'): false )
 
     console.log("👉 BACKEND URL =", backendUrl);
 
