@@ -3,6 +3,7 @@ import validator from 'validator'
 import bcrypt from 'bcrypt'
 import userModel from '../models/userModel.js'
 import jwt from 'jsonwebtoken'
+import {v2 as cloudinary} from 'cloudinary'
 
 //sign up for user api
 const registerUser= async(req, res)=>{
@@ -30,7 +31,7 @@ const registerUser= async(req, res)=>{
         //iss se  ._id filed mil jayegi-- iss se apan token banayenge
 
         const utoken = jwt.sign({id:user._id}, process.env.JWT_SECRET)
-        res.json({success:true, utoken})
+        res.json({success:true, token: utoken})
 
     } catch (error) {
 
@@ -64,7 +65,48 @@ const loginUser= async(req,res)=>{
 
 }
 
+//api to get user profile
+
+const getProfile = async (req,res)=>{
+    try {
+        const {userId}= req.body //jo apn ne authUser me token me se nikal ke req.body pe attach kr di
+         const userData= await userModel.findById(userId).select(' -password')
+        
+         res.json({success:true, userData})
+
+    } catch (error) {
+         res.json({success:false, message:error.message})
+        
+    }
+}
+
+//edit user profile
+const editProfile= async (req,res)=>{
+    try {
+
+        const {userId, name, phone, address, dob, gender}= req.body //userId is added in authuser
+        const imageFile= req.file
+
+        if(!name || !phone || !address || !dob || !gender){
+            throw new   Error("Data missing")
+        }
+        await userModel.findByIdAndUpdate(userId, {name, phone, address:JSON.parse(address), dob, gender}) //find by id and update baki bacha hua
+
+        if(imageFile){
+            //upload image to cloudinary and get the link
+            const imgUpload= await cloudinary.uploader.upload(imageFile.path, {resource_type:'image'})
+            const imageUrl= imgUpload.secure_url
+
+            await userModel.findByIdAndUpdate(userId, {image:imageUrl})
+        }
+        
+        res.json({success:true, message:"Profile Updated"})
+    } catch (error) {
+        
+    }
+}
 
 
 
-export {registerUser, loginUser}
+
+export {registerUser, editProfile, getProfile, loginUser}
