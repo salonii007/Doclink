@@ -2,6 +2,9 @@ import React, { useContext, useState } from 'react'
 // import { assets } from '../assets/assets'
 import { AppContext } from '../context/AppContext';
 import { assets } from '../assets/assets';
+import { toast } from 'react-toastify';
+import axios from 'axios';
+
 
 const Myprofile = () => {
 
@@ -21,12 +24,12 @@ const Myprofile = () => {
       formData.append('address', JSON.stringify(userData.address))
       image && formData.append('image', image)//becoz image is an optional field 
 
-      const {data}= await axios.post(backendUrl + '/api/user/edit-profile', formData, {Headers: {token}})
+      const {data}= await axios.post(backendUrl + '/api/user/edit-profile', formData, {headers: {token}})
 
       if(data.success)
       {
         toast.success(data.message)
-        await loadUserProfileData()
+        await loadUserProfileData
         setisedit(false)
         setimage(false)
       }
@@ -100,7 +103,10 @@ const Myprofile = () => {
       <p> Birthday: </p>
       {
         isedit?
-        <input className='border rounded border-gray-400  p-2' value={userData.dob} onChange={(e)=>setUserData(prev=> ({...prev, dob:e.target.value}))} type="date" />
+        <input className='border rounded border-gray-400  p-2' value={userData.dob ? userData.dob.substring(0, 10) : ""}
+  onChange={(e) =>
+    setUserData((prev) => ({ ...prev, dob: e.target.value }))
+  } type="date" />
         : <p>{userData.dob}</p>
       }
          </div>

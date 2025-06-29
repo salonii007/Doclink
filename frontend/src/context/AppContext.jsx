@@ -51,8 +51,8 @@ const AppContextProvider = (props)=>{
 
 
          const value={
-        doctors, settoken, 
-        token, backendUrl,
+        doctors, getDoctorsData,
+        settoken, token, backendUrl,
          userData, setUserData, loadUserProfile
     }
 
