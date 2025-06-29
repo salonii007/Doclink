@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { isBoolean } from "validator";
+import validator  from "validator";
 
 const appointmentSchema= new mongoose.Schema({
 
