@@ -118,11 +118,12 @@ const editProfile= async (req,res)=>{
 const bookAppointment=async (req,res)=>{
     try {
 
-        const {userId, docId, slotDate, slotTime}= req.body
-        const docData= await doctorModel.findById(docId).select('-password')
+        const userId = req.user.id;
+const { docId, slotDate, slotTime } = req.body;
+const docData= await doctorModel.findById(docId).select('-password')
 
         if(!docData.available){
-
+console.log("doc not available")
             return res.json({success:false, message: "Doctor not available"})
 
         }
@@ -134,6 +135,7 @@ const bookAppointment=async (req,res)=>{
         {
             if(slots_booked[slotDate].includes(slotTime)) //if tht date pe tht time already exists then no doc available
             {
+                // console.log('failed here')
               return res.json({success:false, message:'Slot not available'})
             }
             else
@@ -150,7 +152,7 @@ const bookAppointment=async (req,res)=>{
         delete docData.slots_booked//becos apan appointment save karte he toh docdata bhi save karte he toh kyu bookin slots save karna vo toh sirf chcek karne ke liye the na
         
         console.log("userId:", userId);
-console.log("userData:", userData);
+        console.log("userData:", userData);
 
         const appointmentData={
             userId, 
@@ -179,4 +181,63 @@ console.log("userData:", userData);
     }
 }
 
-export {registerUser, bookAppointment, editProfile, getProfile, loginUser}
+
+//APi to get user appoints for frontend myappointments page
+const listAppointment= async(req,res)=>{
+    try {
+        const {userId}= req.body
+        const appointments= await appointmentModel.find({userId})
+        res.json({success: true, appointments})
+
+    } catch (error) {
+        console.log(error);
+        res.json({success:false, message:error.message})   
+    }
+
+}
+
+
+//api to cancel appointment
+
+const cancelAppointment = async (req, res)=>{
+
+    try {
+
+        const {userId, appointmentId}= req.body
+        const appointmentData = await appointmentModel.findById(appointmentId)
+
+        //verify appointment user
+        if(appointmentData.userId!==userId){
+            return res.json({success:false, message:"Unauthorized user"})
+        }
+        await appointmentModel.findByIdAndUpdate(appointmentId, {cancelled: true})
+        
+
+        //releasing the cancelled appointment doctor slot
+
+        const {docId, slotDate, slotTime}= appointmentData
+
+        const doctorData= await doctorModel.findById(docId)
+
+
+        let slots_booked= doctorData.slots_booked
+
+        slots_booked[slotDate]=slots_booked[slotDate].filter(e=> e !== slotTime)
+
+        await doctorModel.findByIdAndUpdate(docId, {slots_booked})
+
+        res.json({success:true, message:"Appointment Cancelled"})
+
+    } catch (error) {
+         console.log(error);
+        res.json({success:false, message:error.message})   
+    }
+
+}
+
+//API to make Payment of appointment using razorpay
+
+ 
+
+
+export {registerUser, cancelAppointment, listAppointment, bookAppointment, editProfile, getProfile, loginUser}
