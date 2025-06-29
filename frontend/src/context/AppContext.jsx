@@ -13,8 +13,7 @@ const AppContextProvider = (props)=>{
 
     const [userData, setUserData]= useState(false)
 
-
-
+    console.log("Using backendUrl:", backendUrl);
 
    
     const getDoctorsData=async()=>{
@@ -25,6 +24,7 @@ const AppContextProvider = (props)=>{
                 
             }
             else{
+                console.log("yaha atak raha he")
                 toast.error(data.message)
             }
         } catch (error) {

@@ -26,6 +26,8 @@ const Login = () => {
       if(state== 'Sign Up')
       {
         const response= await axios.post(backendUrl+ "/api/user/register", {name, password, email})
+        console.log("Backend URL: ", backendUrl)
+
         const data= response.data
         if(data.success)
         {

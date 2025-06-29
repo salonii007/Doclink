@@ -115,7 +115,7 @@ const Appointment = () => {
       {
         toast.success(data.message)
         getDoctorsData // so tht its updated 
-        navigate('/my-appointments')
+        navigate('/myappointment')
       }
       else
       {
