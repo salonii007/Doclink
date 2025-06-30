@@ -2,12 +2,13 @@ import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../context/AppContext'
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 // import { set } from 'mongoose';
 
 const MyAppointments = () => {
 
   const {backendUrl, token, getDoctorsData  }= useContext(AppContext);
-
+  const navigate = useNavigate()
   const [appointments, setAppointments]= useState([])
 
   const months=[ "", "Jan","Feb","Mar","Apr","May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
@@ -66,6 +67,20 @@ const MyAppointments = () => {
     handler: async(response)=>{
       //response tht we would get on successful payment
       console.log(response)
+
+      try {
+        const {data}= await axios.post(backendUrl+ '/api/user/verify-razorpay', response, {headers:{token}})
+        
+        if(data.success)
+        {
+          getuserAppointments()
+          navigate('/myappointment')
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error(error.message);
+      }
+
     }
   }
   const rzp= new window.Razorpay(options)
@@ -109,9 +124,10 @@ const MyAppointments = () => {
             <p className='text-xs'>{item.docData.address.line2}</p>
             <p  className='text-sm mt-1'><span className='text-sm text-neutral-700 font-medium' >Date and Time:</span> {slotDateFormat } | {item.slotTime} </p>
           </div>
-          <div className='flex flex-col gap-2 justify-end'>
           <div></div>
-          {!item.cancelled && <button onClick={()=> appointmentRazorpay(item._id)}
+          <div className='flex flex-col gap-2 justify-end'>
+          {!item.cancelled && item.payment && <button className='sm:min-w-48 py-2 border rounded text-stone-50 bg-indigo-50 '>PAID</button> }
+          {!item.cancelled && !item.payment &&<button onClick={()=> appointmentRazorpay(item._id)}
            className=' sm:min-w-48 mb-1 p-2 text-sm bg-green-700 border text-white  border-green-400 hover:bg-green-200 hover:text-black'>
             Pay online </button> }
            {!item.cancelled && <button onClick={()=>cancelAppointment(item._id)} className=' sm:min-w-48 p-2 border text-sm bg-red-700 text-white border-red-400  hover:bg-red-200 hover:text-black'>
