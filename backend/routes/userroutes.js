@@ -1,5 +1,5 @@
 import express  from 'express'
-import { bookAppointment, cancelAppointment, editProfile, getProfile, listAppointment, loginUser, paymentRazorpay, registerUser } from '../controllers/usercontroller.js'
+import { bookAppointment, cancelAppointment, editProfile, getProfile, listAppointment, loginUser, paymentRazorpay, registerUser, verifyRazorpay } from '../controllers/usercontroller.js'
 import authUser from '../middlewares/authUser.js'
 import upload from '../middlewares/multer.js'
 
@@ -21,6 +21,8 @@ userRouter.post('/cancel-appointment', authUser, cancelAppointment)
 
 userRouter.post('/payment-razorpay', authUser, paymentRazorpay)
 
+userRouter.post('/verify-razorpay', authUser, verifyRazorpay)
+ 
 export default userRouter
 
 
