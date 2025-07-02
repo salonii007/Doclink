@@ -10,6 +10,8 @@ const DoctorContextProvider =(props)=>{
     const backendUrl=import.meta.env.VITE_BACKEND_URL 
     const [dToken, setdToken]= useState(localStorage.getItem('dToken')? localStorage.getItem('dToken'): "");
     const [appointments, setAppointments]= useState([])
+    const [dashData, setDashData] = useState(false)
+    const[profileData, setprofileData]= useState(false)
 
     const getAppointments = async ()=>{
         try {
@@ -61,10 +63,44 @@ const DoctorContextProvider =(props)=>{
  
         }
     }
+
+    const getDashData= async()=>{
+        try {
+            const {data}= await axios.get(backendUrl+ '/api/doctor/dashbaord', {headers:{dToken}})
+            if(data.success){
+                setDashData(data.dashData)
+
+            }else{
+                toast.error(data.message)
+            }
+        } catch (error) {
+            
+         console.log(error.message);
+            toast.error(error.message)
+        }
+    }
+
+    const getprofileData= async()=>{
+        try {
+            const {data}= await axios.get(backendUrl+ '/api/doctor/profile', {headers:{dToken}})
+            if(data.success){
+                setprofileData(data.profileData)
+
+            }else{
+                toast.error(data.message)
+            }
+            
+        } catch (error) {
+             console.log(error.message);
+            toast.error(error.message)
+        }
+    }
     const value= {
         dToken, setdToken, backendUrl, getAppointments,
         appointments, setAppointments,
-        completeAppointment, cancelAppointment
+        completeAppointment, cancelAppointment,
+        dashData, setDashData,
+        profileData, setprofileData, getprofileData,
     }
 
     return (
