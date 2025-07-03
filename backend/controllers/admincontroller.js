@@ -29,6 +29,12 @@ const addDoctor= async (req, res)=>{
         if(!validator.isEmail(email)){
             throw new Error ("Enter a valid email")
         }
+        const existingDoctor = await doctorModel.findOne({ email });
+    if (existingDoctor) {
+      throw new Error ("Doctor with this email already exists")
+    }
+
+
 
         //validting strong password
         if(password.length <8){
@@ -67,11 +73,12 @@ const addDoctor= async (req, res)=>{
         const newdoctor= new doctorModel(doctordata) //saving data in db!
 
         await newdoctor.save()
-        res.json({success:true, message:"data saved in the database"})
+        res.json({success:true, message:"Doctor added successfully"})
     }
     catch(err){
         console.log(err)
-        res.json({success:false, message:`sorryy something went wrong, error: ${err.message}`})
+        console.log("Thiss")
+        res.json({success:false, message:`Sorryy! Something went wrong, error: ${err.message}`})
 
     }
 

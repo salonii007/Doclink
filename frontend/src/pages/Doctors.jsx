@@ -64,10 +64,10 @@ const Doctors = () => {
                 className='border border-teal-300 rounded-xl overflow-hidden cursor-pointer hover:-translate-y-2 transition-all duration-500' key={index}>
                     <img className='bg-teal-50 ' src={item.image} />
                     <div className='p-4' >
-                        <div className='flex items-center gap-2 text-center text-sm text-green-500'>
-                            <p className='w-2 h-2 bg-green-500 rounded-full'> </p> <p>Available</p>
+                         <div className={`flex items-center gap-2 text-center text-sm  ${item.available? 'text-green-500': "text-gray-500"}`}>
+                            <p className={`w-2 h-2 ${item.available? 'bg-green-500': "bg-gray-500"}rounded-full`}> </p> <p>{ item.available ? 'Available' : 'Not Available'}</p>
                         </div>
-                        <p className='text-teal-900 text-lg font-medium'>{item.name}</p>
+                         <p className='text-teal-900 text-lg font-medium'>{item.name}</p>
                         <p className='text-teal-700 text-sm ' >{item.speciality}</p>
                     </div>
                     </div>

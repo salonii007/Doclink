@@ -65,11 +65,13 @@ const DoctorProfile = () => {
         </div>
         <div className='flex gap-2 py-2'>
           <p>Address:</p>
-          <p className='text-sm'> {  isEdit? <input type="text" onChange={(e)=>setprofileData(prev=>({...prev, address,line1:e.target.value}))} value={profileData.address.line1} /> : profileData.address.line1}<br />
-         {  isEdit? <input type="text" onChange={(e)=>setprofileData(prev=>({...prev, address,line2:e.target.value}))} value={profileData.address.line2} /> : profileData.address.line2} </p>
+          <p className='text-sm'> {  isEdit? <input type="text" onChange={(e)=>setprofileData(prev=>({...prev, address,line1:e.target.value}))}
+ value={profileData.address.line1} /> : profileData.address.line1}<br />
+         {  isEdit? <input type="text" onChange={(e)=>setprofileData(prev=>({...prev, address,line2:e.target.value}))}
+ value={profileData.address.line2} /> : profileData.address.line2} </p>
         </div>
         <div className='flex gap-1 pt-2'>
-          <input onChange={()=> isEdit && setprofileData(prev=> ({...prev,available: !previous.available }))}
+          <input onChange={()=> isEdit && setprofileData(prev=> ({...prev,available: !prev.available }))}
           checked={profileData.available} type="checkbox" />
           <label htmlFor="">Available</label>
         </div>

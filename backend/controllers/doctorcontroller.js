@@ -1,6 +1,7 @@
 import appointmentModel from "../models/appointmentModel.js"
 import doctorModel from "../models/doctorModel.js"
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 //we will create multiple controller functions for multiple apis
 const changeAvailablity = async (req , res)=>{
     try {

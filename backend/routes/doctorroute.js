@@ -1,5 +1,5 @@
 import express from 'express'
-import { appointmentComplete, appointmentsDoctor, doctorDashboard, doctorList, loginDoctor, updatedocProfile } from '../controllers/doctorcontroller.js'
+import { appointmentComplete, appointmentsDoctor, doctorDashboard, doctorList, doctorProfile, loginDoctor, updatedocProfile } from '../controllers/doctorcontroller.js'
 import authDoctor from '../middlewares/authDoctor.js'
 import { appointmentCancel } from '../controllers/admincontroller.js'
 
