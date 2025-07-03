@@ -184,18 +184,33 @@ console.log("doc not available")
 
 
 //APi to get user appoints for frontend myappointments page
-const listAppointment= async(req,res)=>{
-    try {
-        const {userId}= req.body
-        const appointments= await appointmentModel.find({userId})
-        res.json({success: true, appointments})
+// const listAppointment= async(req,res)=>{
+//     try {
+//         const {userId}= req.body
+//         const appointments= await appointmentModel.find({userId})
+//         res.json({success: true, appointments})
 
+//     } catch (error) {
+//         console.log(error);
+//         res.json({success:false, message:error.message})   
+//     }
+
+// }
+
+const listAppointment = async(req, res) => {
+    try {
+        const userId = req.user.id;  // ✅ use from auth middleware
+        const appointments = await appointmentModel
+            .find({ userId })
+            .populate('docId') // ✅ populate doctor info
+            .sort({ date: -1 }); // latest first (optional)
+        res.json({ success: true, appointments });
     } catch (error) {
         console.log(error);
-        res.json({success:false, message:error.message})   
+        res.json({ success: false, message: error.message });
     }
-
 }
+
 
 
 //api to cancel appointment
@@ -204,7 +219,8 @@ const cancelAppointment = async (req, res)=>{
 
     try {
 
-        const {userId, appointmentId}= req.body
+         const userId = req.user.id;
+        const { appointmentId}= req.body
         const appointmentData = await appointmentModel.findById(appointmentId)
 
         //verify appointment user

@@ -32,6 +32,7 @@ const Appointment = () => {
   {
     // logic to calculate available slots for the doctor
 
+  if (!docInfo || !docInfo.slots_booked) return; 
     setdocSlots([]) //clear previous slot
 
     // getting current date
@@ -114,8 +115,8 @@ const Appointment = () => {
       if(data.success)
       {
         toast.success(data.message)
-        getDoctorsData // so tht its updated 
-        navigate('/myappointment')
+        getDoctorsData(); // so tht its updated 
+        navigate('/myappointments')
       }
       else
       {
@@ -133,7 +134,8 @@ const Appointment = () => {
   },[doctors, docId])
 
   useEffect (()=>{
-    getAvailSlot()
+    if(docInfo){
+    getAvailSlot()}
   },[docInfo])
 
   useEffect(()=>{

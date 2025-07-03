@@ -54,7 +54,7 @@ const DoctorDashboard = () => {
               <p className="font-semibold ">Latest Bookings</p>
             </div>
             <div className="pt-4 border border-t-0 ">
-              {dashData.lastestAppointments.map(() => (
+              {dashData.latestAppointments.map(() => (
                 <div
                   className="flex items-center px-6 py-3 gap-3 hover:bg-gray-100"
                   key={index}
@@ -79,7 +79,7 @@ const DoctorDashboard = () => {
                       {" "}
                       Cancelled{" "}
                     </p>
-                  ) : item.iscompleted ? (
+                  ) : item.isCompleted ? (
                     <p className="text-xs inline border border-primary px-2 text-green-600    rounded-full">
                       {" "}
                       Completed{" "}

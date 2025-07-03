@@ -50,7 +50,7 @@ const DoctorAppointment = () => {
                        {
                         item.cancelled 
                         ? <p className='text-xs inline border border-primary px-2 text-red-600 rounded-full'> Cancelled </p>
-                        : item.iscompleted 
+                        : item.isCompleted 
                         ? <p className='text-xs inline border border-primary px-2 text-green-600    rounded-full'> Completed </p>
                         :  <div className='flex'>
                         <img onClick={()=>cancelAppointment(item._id)} className='w-10 cursor-pointer' src={assets.cancel_icon} alt="" />

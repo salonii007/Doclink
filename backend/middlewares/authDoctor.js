@@ -12,7 +12,7 @@ const authDoctor= async (req, res, next)=>{
         const dtoken_decode= jwt.verify(dtoken, process.env.JWT_SECRET);
         
         // req.doctorId=dtoken_decode.id;
-        req.body.docId =  dtoken_decode.id
+        req.docId =  dtoken_decode.id
 
         //for the case dtoken matches, i.e. authorized
         next();

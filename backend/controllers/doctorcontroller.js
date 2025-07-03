@@ -64,7 +64,7 @@ const loginDoctor= async(req, res)=>{
 //Api to get doctor appointments for doctor panel
 const appointmentsDoctor = async (req, res)=>{
     try {
-        const {docId}= req.body
+        const {docId}= req.docId
         const appointments= await appointmentModel.find({docId})
 
         res.json({success:true, appointments})
@@ -76,10 +76,11 @@ const appointmentsDoctor = async (req, res)=>{
 }
 
 //Api to mark Appointment Completed for doctor panel
-const appointmentComplete = async(re, res)=>{
+const appointmentComplete = async(req, res)=>{
    try {
+    const docId= req.docId
 
-    const{docId, appointmentId}= req.body
+    const{appointmentId}= req.body
 
     const appointmentData= await appointmentModel.findById(appointmentId)
 
@@ -100,7 +101,8 @@ const appointmentComplete = async(re, res)=>{
 const appointmentCancel = async(req, res)=>{
    try {
 
-    const{docId, appointmentId}= req.body
+        const {docId}= req.docId
+    const{ appointmentId}= req.body
 
     const appointmentData= await appointmentModel.findById(appointmentId)
 
@@ -122,7 +124,7 @@ const appointmentCancel = async(req, res)=>{
 
 const doctorDashboard = async(req, res)=>{
     try{
-        const {docId}= req.body
+        const {docId}= req.docId
 
         const appointments= await appointmentModel.find({docId})
         let earnings= 0;
@@ -158,7 +160,7 @@ const doctorDashboard = async(req, res)=>{
 //api to get doctor profile for doctor pane
 const doctorProfile= async(req, res)=>{
     try {
-        const {docId}= req.body
+        const docId= req.docId
         const profileData= await doctorModel.findById(docId).select('-password')
 
         res.json({success:true, profileData});
@@ -173,8 +175,8 @@ const doctorProfile= async(req, res)=>{
 
 const updatedocProfile= async(req,res)=>{
     try {
-        
-        const{docId, fees, address, available}=req.body
+        const docId= req.docId
+        const{ fees, address, available}=req.body
         await doctorModel.findByIdAndUpdate(docId, {fees, address, available})
 
         res.json({success:true, message:"Profile Updated"})

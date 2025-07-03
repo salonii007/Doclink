@@ -90,7 +90,7 @@ const MyAppointments = () => {
  const appointmentRazorpay= async(appointmentId)=>{
   try {
     
-    const {data}= await axios.post(backendUrl+ '/api/user.payment-razorpay', {appointmentId}, {headers:{token}})
+    const {data}= await axios.post(backendUrl+ '/api/user/payment-razorpay', {appointmentId}, {headers:{token}})
 
     if(data.success)
     {
@@ -98,6 +98,7 @@ const MyAppointments = () => {
       initPay(data.order)
     }
   } catch (error) {
+    console.log(error.message)
     
   }
 
@@ -111,9 +112,13 @@ const MyAppointments = () => {
  },[token])
   return (
     <div>
-      <p className='pb-3 mt-12 text-xl text-semibold'>My Appointments</p>
+      <p className='pb-3 mt-12 text-xl font-semibold'>My Appointments</p>
       <div>
+        {appointments.length === 0 && (
+  <p className="text-gray-500 mt-6 text-sm">No appointments booked yet.</p>
+)}
        {appointments.map((item,index)=>(
+        
         <div className='grid grid-cols-[1fr_2fr] gap-4 sm:flex sm:gap-6 py-2 border-b' key={index}>
           <img className='w-32 bg-indigo-50' src={item.docData.image} alt="" />
           <div className='flex-1 text-sm text-zinc-600'>
@@ -122,7 +127,7 @@ const MyAppointments = () => {
             <p className='text-zinc-700 font-medium mt-1' >Address:</p>
             <p className='text-xs' >{item.docData.address.line1}</p>
             <p className='text-xs'>{item.docData.address.line2}</p>
-            <p  className='text-sm mt-1'><span className='text-sm text-neutral-700 font-medium' >Date and Time:</span> {slotDateFormat } | {item.slotTime} </p>
+            <p  className='text-sm mt-1'><span className='text-sm text-neutral-700 font-medium' >Date and Time:</span>  {slotDateFormat(item.slotDate)} | {item.slotTime} </p>
           </div>
           <div></div>
           <div className='flex flex-col gap-2 justify-end'>

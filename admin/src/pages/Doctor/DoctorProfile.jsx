@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react'
 import { DoctorContext } from '../../context/DoctorContext'
 import { AppContext } from '../../context/AppContext'
 import axios from 'axios'
+import { toast } from 'react-toastify'
+
 
 const DoctorProfile = () => {
   const {dToken, setprofileData, profileData, backendUrl, getprofileData}= useContext(DoctorContext)
@@ -37,6 +39,8 @@ const DoctorProfile = () => {
     }
 
   }, [dToken])
+
+  if (!profileData) return <div className="text-center p-5">Loading profile...</div>;
   return  profileData && (
 
 
@@ -65,14 +69,57 @@ const DoctorProfile = () => {
         </div>
         <div className='flex gap-2 py-2'>
           <p>Address:</p>
-          <p className='text-sm'> {  isEdit? <input type="text" onChange={(e)=>setprofileData(prev=>({...prev, address,line1:e.target.value}))}
- value={profileData.address.line1} /> : profileData.address.line1}<br />
-         {  isEdit? <input type="text" onChange={(e)=>setprofileData(prev=>({...prev, address,line2:e.target.value}))}
- value={profileData.address.line2} /> : profileData.address.line2} </p>
+          {isEdit ? (
+            <>
+              <input
+                type="text"
+                placeholder="Line 1"
+                onChange={(e) =>
+                  setprofileData((prev) => ({
+                    ...prev,
+                    address: {
+                      ...prev.address,
+                      line1: e.target.value,
+                    },
+                  }))
+                }
+                value={profileData.address.line1}
+              />
+              <input
+                type="text"
+                placeholder="Line 2"
+                onChange={(e) =>
+                  setprofileData((prev) => ({
+                    ...prev,
+                    address: {
+                      ...prev.address,
+                      line2: e.target.value,
+                    },
+                  }))
+                }
+                value={profileData.address.line2}
+              />
+            </>
+          ) : (
+            <>
+              <p>{profileData.address.line1}</p>
+              <p>{profileData.address.line2}</p>
+            </>
+          )}
         </div>
+
         <div className='flex gap-1 pt-2'>
-          <input onChange={()=> isEdit && setprofileData(prev=> ({...prev,available: !prev.available }))}
-          checked={profileData.available} type="checkbox" />
+          <input
+  type="checkbox"
+  disabled={!isEdit}
+  onChange={() =>
+    setprofileData((prev) => ({
+      ...prev,
+      available: !prev.available,
+    }))
+  }
+  checked={profileData.available}
+/>
           <label htmlFor="">Available</label>
         </div>
 
