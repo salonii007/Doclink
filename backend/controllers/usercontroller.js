@@ -254,12 +254,14 @@ const cancelAppointment = async (req, res)=>{
 
 //API to make Payment of appointment using razorpay
 
-const razorpayInstance = new razorpay({
+
+const paymentRazorpay = async (req, res)=>{
+    try {
+
+        const razorpayInstance = new razorpay({
     key_id: process.env.RAZORPAY_KEY_ID,
     key_secret:process.env.RAZORPAY_KEY_SECRET
 })
-const paymentRazorpay = async (req, res)=>{
-    try {
 
         const {appointmentId}= req.body
         const appointmentData= await appointmentModel.findById(appointmentId);
@@ -291,6 +293,13 @@ const paymentRazorpay = async (req, res)=>{
 
 const verifyRazorpay = async(req, res)=>{
     try {
+        
+
+        const razorpayInstance = new razorpay({
+    key_id: process.env.RAZORPAY_KEY_ID,
+    key_secret:process.env.RAZORPAY_KEY_SECRET
+})
+
 
         const {razorpay_order_id}= req.body;
         const orderInfo= await razorpayInstance.orders.fetch(razorpay_order_id)
