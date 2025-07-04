@@ -12,12 +12,13 @@ const Login = () => {
   const {token, settoken, backendUrl } = useContext(AppContext)
 
   const navigate = useNavigate();
-  const [state, setstate]=useState("Sign Up");
+  const [state, setstate]=useState("Login");
 
   const[email,setemail]=useState("");
 
   const [password,setpassword]=useState("");
   const [name, setname]=useState("");
+  const [loading, setLoading] = useState(false);
 
 
   const onsubmithandler= async (event)=>{
@@ -56,13 +57,29 @@ const Login = () => {
       
     }
   }
-  useEffect(()=>{
-    if(token){
-      navigate('/')
-    }
-  }, [token])
 
-  return (
+  useEffect(()=>{
+    if(state== 'Sign Up'){
+      setemail("");
+      setpassword("")
+    }
+    else{
+      setemail("testuser@gmail.com");
+      setpassword("12345678")
+    }
+
+  },[state])
+    useEffect(() => {
+      if (token && token !== false) {
+        navigate('/');
+      } else {
+        setLoading(false);
+      }
+    }, [token, navigate]);
+
+    if (loading) return <div>Loading...</div>;
+
+    return (
     <div>
       <form onSubmit={onsubmithandler} className='min-h-[80vh] flex items-center' action="" >
         <div className=' px-8 py-7 border border-gray-200 min-w-[340px] sm:min-w-96 m-auto shadow-lg rounded-lg bg-gray-50'>

@@ -13,8 +13,8 @@ const Doctors = () => {
   
   const applyfilter=()=>{
     if(speciality){
-      setfilterDoc(doctors.filter(doc=>doc.speciality=== speciality))
-    } else{
+      setfilterDoc(doctors.filter(doc => doc.speciality.toLowerCase() === speciality.toLowerCase()))
+} else{
       setfilterDoc(doctors); 
     }
   }
@@ -32,7 +32,7 @@ const Doctors = () => {
         
           <button className={`py-1 max-w-16 px-3 border rounded text-sm transition-all sm:hidden ${showFilter? 'bg-primary text-white' : ""}`} onClick={()=> setshowFilter(prev=> !prev)}>Filter</button>
         <div className={` ${showFilter? 'flex' : 'hidden sm:flex'} flex-col gap-4 text-sm text-teal-900`} >
-           <p onClick={()=>speciality==='general physician'? navigate('/doctors'): navigate('/doctors/General physician')}
+           <p onClick={()=>speciality==='General physician'? navigate('/doctors'): navigate('/doctors/General physician')}
             className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-teal-500 rounded-lg transition-all cursor-pointer 
             ${speciality==="General physician" ? "bg-indigo-50 text-black" : "" }`} >General Physician</p>
            
