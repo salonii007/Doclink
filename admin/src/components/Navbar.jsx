@@ -20,7 +20,7 @@ const Navbar = () => {
   return (
     <div className='flex justify-between items-center px-4 sm:px-10 py-3 border-b bg-white'>
         <div className='flex items-center gap-2 text-xs'>
-            <img className= 'w-36 sm:w-40 cursor-pointer ' src={assets.admin_logo} alt="" />
+            <img className= 'w-44 sm:w-60 cursor-pointer ' src={assets.admin_logo} alt="" />
             <p className='border px-2.5 py-0.5 rounded-full border-teal-400 text-teal-800'>
                 {
                     aToken? 'Admin' : 'Doctor'

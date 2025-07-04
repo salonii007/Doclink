@@ -6,6 +6,7 @@ import { AdminContext } from '../context/AdminContext'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
 import { DoctorContext } from '../context/DoctorContext'
+import { useEffect } from 'react'
   
 
 const Login = () => { 
@@ -17,6 +18,18 @@ const Login = () => {
 
     const [email, setemail]=useState('')
     const [password, setpassword] = useState('')
+
+     useEffect(() => {
+    if (state === 'Admin') {
+      setemail('admin@doclink.com')
+      setpassword('doclink@123')
+    } else {
+      setemail('testdoctor@gmail.com')
+      setpassword('123456789')
+    }
+  }, [state])
+
+
 
     const onSubmitHandle = async (event)=>{
         event.preventDefault()
