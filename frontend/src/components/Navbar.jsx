@@ -35,6 +35,11 @@ const Navbar = () => {
           <NavLink to="/contact">Contact</NavLink>
           <hr className="border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden" />
         </li>
+        <li className="px-4 py-2 bg-teal-50 text-primary rounded-full border border-primary hover:bg-white transition duration-200">
+  <a href="https://admin.your-deployed-admin-url.com" target="_blank" rel="noopener noreferrer">Doctor/Admin</a>
+  <hr className="border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden" />
+</li>
+
       </ul>
       <div>
         {token  && userData ? (
@@ -78,6 +83,14 @@ const Navbar = () => {
            src={assets.cross_icon} alt="" />
         </div>
         <ul className="flex flex-col items-center gap-2 mt-5 px-5 text-lg font-medium">
+          <a
+  className="px-4 py-2 hover:bg-primary hover:text-white rounded inline-block"
+  href="https://admin.your-deployed-admin-url.com"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  Doctor/Admin
+</a>
           <NavLink className='px-4 py-2 rounded inline-block' 
           onClick={()=>setshowmenu(false)} to={'/'}>HOME</NavLink>
           <NavLink className='px-4 py-2 rounded inline-block'
