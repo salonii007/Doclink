@@ -1,6 +1,5 @@
 # 👨‍⚕️ DocLink – Doctor Appointment Booking Platform
 
-[🌐 Live Demo](https://doclink-frontend-saloni.vercel.app/)
 
 DocLink is a full-stack Doctor Appointment Booking platform that streamlines healthcare access for patients, doctors, and administrators. It provides real-time, clash-free appointment scheduling, secure authentication, and integrated payment features, all wrapped in a responsive and user-friendly interface.
 
